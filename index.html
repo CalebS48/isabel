@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isabel Ballard | Strategic Communications & PR</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. CORE VARIABLES - EDITORIAL THEME
+           ========================================================================== */
+        :root {
+            --bg-body: #FCF3F6;        /* Professional Soft Pink */
+            --accent-blue: #6495ED;    /* Cornflower Blue */
+            --text-dark: #0f172a;      /* Deep Slate/Almost Black */
+            --text-light: #475569;
+            --white: #FFFFFF;
+            --border-color: #cbd5e1;
+            
+            --font-display: 'Playfair Display', serif;
+            --font-sans: 'Outfit', sans-serif;
+            
+            --container-width: 1200px;
+            --section-padding: 120px 20px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-dark);
+            background-color: var(--bg-body);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            line-height: 1.6;
+        }
+
+        /* ==========================================================================
+           2. EDITORIAL TYPOGRAPHY & UTILITIES
+           ========================================================================== */
+        h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.1; }
+        
+        .container { max-width: var(--container-width); margin: 0 auto; padding: var(--section-padding); }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-blue);
+            font-weight: 700;
+        }
+
+        /* Modern Offset Button */
+        .btn-editorial {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 40px;
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--white);
+            background: var(--text-dark);
+            border: 1px solid var(--text-dark);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .btn-editorial::after {
+            content: '';
+            position: absolute;
+            top: 6px; left: 6px;
+            width: 100%; height: 100%;
+            border: 1px solid var(--text-dark);
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+
+        .btn-editorial:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-editorial:hover::after {
+            top: 0; left: 0;
+            border-color: var(--accent-blue);
+        }
+
+        /* ==========================================================================
+           3. NAVIGATION - MINIMALIST
+           ========================================================================== */
+        .top-nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-body);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 3000;
+            transition: padding 0.3s ease;
+        }
+
+        .nav-brand {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-dark);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-brand span { color: var(--accent-blue); }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 3001;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 35px;
+            height: 2px;
+            background: var(--text-dark);
+            transition: all 0.3s;
+        }
+
+        .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); background: var(--accent-blue); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: var(--accent-blue); }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100vh;
+            background: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            z-index: 2999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .nav-overlay.active { opacity: 1; pointer-events: all; }
+
+        .nav-overlay a {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.2s, transform 0.2s;
+            text-transform: uppercase;
+        }
+
+        .nav-overlay a:hover { color: var(--accent-blue); transform: translateX(10px); }
+
+        /* ==========================================================================
+           4. HERO - HIGH FASHION EDITORIAL
+           ========================================================================== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 100px 20px 0;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            text-align: center;
+        }
+
+        .hero-pretitle {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--accent-blue);
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 10vw, 9rem);
+            font-weight: 900;
+            line-height: 0.9;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 30px;
+        }
+
+        .hero-title i {
+            font-style: italic;
+            color: var(--accent-blue);
+            font-weight: 400;
+        }
+
+        .hero-desc {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto 50px;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        /* Continuous Marquee Banner */
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            background: var(--text-dark);
+            padding: 15px 0;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border-top: 1px solid var(--accent-blue);
+            border-bottom: 1px solid var(--accent-blue);
+        }
+
+        .marquee-text {
+            display: inline-block;
+            white-space: nowrap;
+            font-family: var(--font-sans);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--white);
+            animation: marquee 20s linear infinite;
+        }
+
+        .marquee-text span { color: var(--accent-blue); margin: 0 15px; }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ==========================================================================
+           5. ABOUT - EDITORIAL SPLIT
+           ========================================================================== */
+        .about-section { background: var(--white); }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image-wrapper {
+            position: relative;
+        }
+
+        .about-image {
+            width: 100%;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: filter 0.5s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-image-wrapper:hover .about-image { filter: grayscale(0%); }
+
+        /* Offset shadow block for high-end feel */
+        .about-image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 20px; left: 20px;
+            width: 100%; height: 100%;
+            background: var(--accent-blue);
+            z-index: 1;
+        }
+
+        .about-text h3 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+        }
+
+        .about-text p {
+            font-size: 1.15rem;
+            margin-bottom: 25px;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .skills-container {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            list-style: none;
+        }
+
+        .skills-list li {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 16px;
+            border: 1px solid var(--text-dark);
+            color: var(--text-dark);
+        }
+
+        /* ==========================================================================
+           6. THE JOURNEY (EXPERIENCE & RESUME PREVIEW)
+           ========================================================================== */
+        .experience-section { background: var(--bg-body); }
+
+        /* Resume Preview Styling */
+        .resume-display-box {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            text-align: center;
+        }
+
+        .resume-img-wrapper {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 10px;
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .resume-img-wrapper:hover { transform: translateY(-5px); }
+
+        .resume-img-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid var(--border-color);
+        }
+
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            background: var(--white);
+            padding: 40px;
+            border-left: 4px solid var(--accent-blue);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: all 0.3s;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .timeline-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .timeline-date {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            color: var(--accent-blue);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .timeline-location { font-size: 0.9rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px;}
+
+        .timeline-item h3 { font-size: 2rem; margin-bottom: 5px; }
+        .timeline-item h4 { font-size: 1.1rem; font-family: var(--font-sans); color: var(--text-dark); font-weight: 700; margin-bottom: 15px; }
+        .timeline-item p { color: var(--text-light); }
+
+        /* ==========================================================================
+           7. THE VAULT (PORTFOLIO GRID)
+           ========================================================================== */
+        .vault-section { background: var(--white); }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            display: block;
+            text-decoration: none;
+            color: var(--text-dark);
+            group: hover;
+        }
+
+        .project-visual {
+            background: var(--bg-body);
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* Offset Hover Effect for Cards */
+        .project-visual::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            border: 1px solid var(--accent-blue);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .project-card:hover .project-visual {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: var(--white);
+            transform: translate(-5px, -5px);
+        }
+
+        .project-card:hover .project-visual::after {
+            opacity: 1;
+            transform: translate(10px, 10px);
+        }
+
+        .project-card h3 { font-size: 1.8rem; margin-bottom: 10px; }
+        .project-card p { font-family: var(--font-sans); color: var(--text-light); font-size: 1rem; }
+        .card-link-text { 
+            display: inline-block; 
+            margin-top: 15px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            font-size: 0.85rem; 
+            letter-spacing: 1px; 
+            color: var(--accent-blue); 
+        }
+
+        /* ==========================================================================
+           8. CONTACT SECTION (EDITORIAL ACTIONS)
+           ========================================================================== */
+        .contact-section { background: var(--bg-body); }
+
+        .contact-actions {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        /* ==========================================================================
+           9. FOOTER
+           ========================================================================== */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 100px 20px 40px;
+        }
+
+        .footer-grid {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        .footer-brand span { color: var(--accent-blue); }
+        .footer-bio { color: #94a3b8; font-size: 1.1rem; max-width: 400px; }
+
+        .footer-heading {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            color: var(--accent-blue);
+        }
+
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 15px; }
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--accent-blue); }
+
+        .footer-copyright { text-align: center; color: #64748b; font-size: 0.9rem; }
+
+        /* ==========================================================================
+           10. RESPONSIVE DESIGN
+           ========================================================================== */
+        @media (max-width: 900px) {
+            .about-grid { grid-template-columns: 1fr; }
+            .about-image { max-width: 100%; aspect-ratio: 16/9; }
+            .footer-grid { grid-template-columns: 1fr; gap: 40px;}
+            .timeline-meta { flex-direction: column; align-items: flex-start; gap: 5px;}
+        }
+
+        @media (max-width: 600px) {
+            :root { --section-padding: 80px 20px; }
+            .hero-title { font-size: 3.5rem; }
+            .top-nav { padding: 15px 20px; }
+            .section-title { font-size: 2.5rem; }
+            .contact-actions { gap: 20px; flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-nav" id="nav">
+        <a href="#home" class="nav-brand">Isabel<span>.</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <nav class="nav-overlay" id="navOverlay">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">The Strategist</a>
+        <a href="#experience" class="nav-link">The Journey</a>
+        <a href="#work" class="nav-link">The Vault</a>
+        <a href="#contact" class="nav-link">Connect</a>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <span class="hero-pretitle">AD/PR Major @ UCF</span>
+            <h1 class="hero-title">Shaping <br><i>Perspectives</i></h1>
+            <p class="hero-desc">I craft vibrant, data-driven narratives and creative campaigns that capture attention, shape perception, and refuse to let go.</p>
+            <a href="#work" class="btn-editorial">Explore My Portfolio</a>
+        </div>
+        
+        <div class="marquee-container">
+            <div class="marquee-text">
+                PUBLIC RELATIONS <span>✦</span> BRAND STRATEGY <span>✦</span> MEDIA RELATIONS <span>✦</span> CREATIVE COPYWRITING <span>✦</span> CAMPAIGN EXECUTION <span>✦</span> PUBLIC RELATIONS <span>✦</span> BRAND STRATEGY <span>✦</span> MEDIA RELATIONS <span>✦</span> CREATIVE COPYWRITING <span>✦</span> CAMPAIGN EXECUTION <span>✦</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-subtitle">The Strategist</h2>
+                <h3 class="section-title">Beyond the Brief.</h3>
+            </div>
+            
+            <div class="about-grid">
+                <div class="about-image-wrapper">
+                    <img src="https://res.cloudinary.com/dffo9kuhp/image/upload/v1775751604/IMG_8546_an0jmp.jpg" alt="Isabel Ballard" class="about-image" loading="lazy">
+                </div>
+                <div class="about-text">
+                    <h3>Hi, I'm the missing piece to your communications puzzle.</h3>
+                    <p>As an Advertising and Public Relations major at the University of Central Florida, I've spent my academic career mastering the art of the strategic pivot. I don't just write press releases; I architect stories.</p>
+                    <p>My approach bridges the gap between analytical rigor and vibrant, out-of-the-box creativity. Whether it's organizing community engagement, delivering prompt customer service, or executing a fully-fledged social media strategy, I build narratives that genuinely resonate.</p>
+                    
+                    <div class="skills-container">
+                        <ul class="skills-list">
+                            <li>Event Planning</li>
+                            <li>Timeline Development</li>
+                            <li>Customer Relations</li>
+                            <li>Public Speaking</li>
+                            <li>Campaign Execution</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="experience-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-subtitle">The Journey</h2>
+                <h3 class="section-title">Professional Record.</h3>
+            </div>
+
+            <div class="resume-display-box">
+                <div class="resume-img-wrapper">
+                    <img src="https://res.cloudinary.com/dffo9kuhp/image/upload/v1775752017/Isabel_Resume_NEW-1_hnnozm.png" alt="Isabel Ballard Resume Preview" loading="lazy">
+                </div>
+                <a href="https://res.cloudinary.com/dffo9kuhp/image/upload/v1775750920/Isabel_Resume_NEW_aff02g.pdf" target="_blank" rel="noopener noreferrer" class="btn-editorial">Download Full PDF</a>
+            </div>
+
+            <div class="timeline-grid">
+                <div class="timeline-item">
+                    <div class="timeline-meta">
+                        <span class="timeline-date">August 2025 - Present</span>
+                        <span class="timeline-location">Orlando, FL</span>
+                    </div>
+                    <h3>Mail Office Assistant</h3>
+                    <h4>UCF Mail Services</h4>
+                    <p>Manage the sorting and distribution of high-volume packages for 12,000+ campus residents. Track deliveries and maintain logistical records using WTS package management software while resolving daily inquiries to deliver high-quality customer service.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-meta">
+                        <span class="timeline-date">April 2024 - Present</span>
+                        <span class="timeline-location">Tampa, FL</span>
+                    </div>
+                    <h3>Front of House Employee</h3>
+                    <h4>Tijuana Flats</h4>
+                    <p>Deliver prompt, engaging customer service in a high-volume restaurant environment, assisting guests with menu inquiries and order processing. Maintain strict organization and cleanliness standards across all dining areas and resolve customer complaints effectively.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-meta">
+                        <span class="timeline-date">March 2022 - May 2024</span>
+                        <span class="timeline-location">Tampa, FL</span>
+                    </div>
+                    <h3>Co-Teacher</h3>
+                    <h4>Grace Family Church</h4>
+                    <p>Collaborated with a team of five teachers to deliver structured weekly lessons to a group of 75+ children. Facilitated seamless transitions between learning stations, guided students through small-group discussions, and developed engaging lesson plans.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="vault-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-subtitle">The Vault</h2>
+                <h3 class="section-title">Selected Works.</h3>
+            </div>
+
+            <div class="portfolio-grid">
+                <a href="https://res.cloudinary.com/dffo9kuhp/image/upload/v1775751360/Final_Report_-_Fall_2025_-_OWC_Team_4_compressed_fpok9p.pdf" target="_blank" rel="noopener noreferrer" class="project-card">
+                    <div class="project-visual">🤝</div>
+                    <h3>Oviedo Women's Club</h3>
+                    <p>Comprehensive final report and strategic communication campaign.</p>
+                    <span class="card-link-text">Read Report &rarr;</span>
+                </a>
+
+                <a href="https://res.cloudinary.com/dffo9kuhp/image/upload/v1775749764/News_Release_uyemb1.pdf" target="_blank" rel="noopener noreferrer" class="project-card">
+                    <div class="project-visual">📰</div>
+                    <h3>News Release</h3>
+                    <p>Strategic communication drop designed for external media distribution.</p>
+                    <span class="card-link-text">View Document &rarr;</span>
+                </a>
+
+                <a href="https://res.cloudinary.com/dffo9kuhp/image/upload/v1775749765/News_Value_td1znh.pdf" target="_blank" rel="noopener noreferrer" class="project-card">
+                    <div class="project-visual">💡</div>
+                    <h3>News Value</h3>
+                    <p>Analytical breakdown detailing the core elements of brand storytelling.</p>
+                    <span class="card-link-text">View Document &rarr;</span>
+                </a>
+
+                <a href="https://res.cloudinary.com/dffo9kuhp/image/upload/v1775749765/Which_House_Will_You_Pick_xtcgti.pdf" target="_blank" rel="noopener noreferrer" class="project-card">
+                    <div class="project-visual">🏠</div>
+                    <h3>Audience Segmentation</h3>
+                    <p>Creative campaign assets and targeted demographic strategy.</p>
+                    <span class="card-link-text">View Document &rarr;</span>
+                </a>
+
+                <a href="https://res.cloudinary.com/dffo9kuhp/image/upload/v1775749764/Pitch_Prep_Work_ctpkha.pdf" target="_blank" rel="noopener noreferrer" class="project-card">
+                    <div class="project-visual">🎤</div>
+                    <h3>Pitch Prep Work</h3>
+                    <p>Internal documentation and framing notes for media relations outreach.</p>
+                    <span class="card-link-text">View Document &rarr;</span>
+                </a>
+
+                <a href="https://res.cloudinary.com/dffo9kuhp/image/upload/v1775749894/document_kzrhow.pdf" target="_blank" rel="noopener noreferrer" class="project-card">
+                    <div class="project-visual">📁</div>
+                    <h3>Portfolio Overview</h3>
+                    <p>A comprehensive overview of recent public relations deliverables.</p>
+                    <span class="card-link-text">View Document &rarr;</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-subtitle">Inquiries</h2>
+                <h3 class="section-title">Let's Talk.</h3>
+            </div>
+
+            <div class="contact-actions">
+                <a href="mailto:ballard5isabel@gmail.com" class="btn-editorial">Email Me</a>
+                <a href="https://www.linkedin.com/in/isabelballard/" target="_blank" rel="noopener noreferrer" class="btn-editorial">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand">Isabel<span>.</span></div>
+                <p class="footer-bio">An AD/PR strategist studying at the University of Central Florida, specializing in crafting narratives that resonate and inspire action.</p>
+            </div>
+            
+            <div>
+                <h4 class="footer-heading">Sitemap</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">The Strategist</a></li>
+                    <li><a href="#experience">The Journey</a></li>
+                    <li><a href="#work">The Vault</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="footer-heading">Connect</h4>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/isabelballard/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                    <li><a href="mailto:Ballard5isabel@gmail.com">Email Me</a></li>
+                    <li><a href="https://res.cloudinary.com/dffo9kuhp/image/upload/v1775750920/Isabel_Resume_NEW_aff02g.pdf" target="_blank" rel="noopener noreferrer">Download Resume</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-copyright">
+            &copy; 2026 Isabel Ballard. Designed for impact.
+        </div>
+    </footer>
+
+    <script>
+        // Minimalist Mobile Menu Logic
+        const menuToggle = document.getElementById('menuToggle');
+        const navOverlay = document.getElementById('navOverlay');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navBar = document.getElementById('nav');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+            document.body.style.overflow = navOverlay.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+    </script>
+</body>
+</html>
