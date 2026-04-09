@@ -14,9 +14,9 @@
            1. CORE VARIABLES - EDITORIAL THEME
            ========================================================================== */
         :root {
-            --bg-body: #FCF3F6;        /* Professional Soft Pink */
-            --accent-blue: #6495ED;    /* Cornflower Blue */
-            --text-dark: #0f172a;      /* Deep Slate/Almost Black */
+            --bg-body: #FCF3F6;        
+            --accent-blue: #6495ED;    
+            --text-dark: #0f172a;      
             --text-light: #475569;
             --white: #FFFFFF;
             --border-color: #cbd5e1;
@@ -69,7 +69,6 @@
             font-weight: 700;
         }
 
-        /* Modern Offset Button */
         .btn-editorial {
             display: inline-flex;
             align-items: center;
@@ -110,7 +109,7 @@
         }
 
         /* ==========================================================================
-           3. NAVIGATION - MINIMALIST
+           3. NAVIGATION
            ========================================================================== */
         .top-nav {
             position: fixed;
@@ -189,7 +188,7 @@
         .nav-overlay a:hover { color: var(--accent-blue); transform: translateX(10px); }
 
         /* ==========================================================================
-           4. HERO - HIGH FASHION EDITORIAL
+           4. HERO
            ========================================================================== */
         .hero {
             min-height: 100vh;
@@ -242,7 +241,6 @@
             font-weight: 400;
         }
 
-        /* Continuous Marquee Banner */
         .marquee-container {
             width: 100%;
             overflow: hidden;
@@ -275,7 +273,7 @@
         }
 
         /* ==========================================================================
-           5. ABOUT - EDITORIAL SPLIT
+           5. ABOUT - PERFECTLY CROPPED HEADSHOT
            ========================================================================== */
         .about-section { background: var(--white); }
 
@@ -286,23 +284,14 @@
             align-items: center;
         }
 
+        /* Image Wrapper handles the blue offset shadow */
         .about-image-wrapper {
             position: relative;
-        }
-
-        .about-image {
             width: 100%;
-            aspect-ratio: 4/5;
-            object-fit: cover;
-            filter: grayscale(20%);
-            transition: filter 0.5s ease;
-            position: relative;
-            z-index: 2;
+            max-width: 450px;
+            margin: 0 auto;
         }
 
-        .about-image-wrapper:hover .about-image { filter: grayscale(0%); }
-
-        /* Offset shadow block for high-end feel */
         .about-image-wrapper::before {
             content: '';
             position: absolute;
@@ -310,6 +299,31 @@
             width: 100%; height: 100%;
             background: var(--accent-blue);
             z-index: 1;
+        }
+
+        /* The container handles the aspect ratio and hides overflow */
+        .about-image-container {
+            width: 100%;
+            aspect-ratio: 4/5;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            background: var(--bg-body);
+        }
+
+        /* The image perfectly fills the container without squishing */
+        .about-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 20%; /* Keeps focus slightly higher up (on the face) */
+            filter: grayscale(20%);
+            transition: filter 0.5s ease, transform 0.5s ease;
+        }
+
+        .about-image-wrapper:hover .about-image-container img { 
+            filter: grayscale(0%);
+            transform: scale(1.03);
         }
 
         .about-text h3 {
@@ -350,11 +364,10 @@
         }
 
         /* ==========================================================================
-           6. THE JOURNEY (EXPERIENCE & RESUME PREVIEW)
+           6. THE JOURNEY
            ========================================================================== */
         .experience-section { background: var(--bg-body); }
 
-        /* Resume Preview Styling */
         .resume-display-box {
             max-width: 800px;
             margin: 0 auto 80px;
@@ -456,7 +469,6 @@
             position: relative;
         }
 
-        /* Offset Hover Effect for Cards */
         .project-visual::after {
             content: '';
             position: absolute;
@@ -492,7 +504,7 @@
         }
 
         /* ==========================================================================
-           8. CONTACT SECTION (EDITORIAL ACTIONS)
+           8. CONTACT SECTION
            ========================================================================== */
         .contact-section { background: var(--bg-body); }
 
@@ -562,7 +574,7 @@
            ========================================================================== */
         @media (max-width: 900px) {
             .about-grid { grid-template-columns: 1fr; }
-            .about-image { max-width: 100%; aspect-ratio: 16/9; }
+            .about-image-wrapper { max-width: 100%; }
             .footer-grid { grid-template-columns: 1fr; gap: 40px;}
             .timeline-meta { flex-direction: column; align-items: flex-start; gap: 5px;}
         }
@@ -619,8 +631,11 @@
             
             <div class="about-grid">
                 <div class="about-image-wrapper">
-                    <img src="https://res.cloudinary.com/dffo9kuhp/image/upload/v1775751604/IMG_8546_an0jmp.jpg" alt="Isabel Ballard" class="about-image" loading="lazy">
+                    <div class="about-image-container">
+                        <img src="https://res.cloudinary.com/dffo9kuhp/image/upload/v1775751604/IMG_8546_an0jmp.jpg" alt="Isabel Ballard" loading="lazy">
+                    </div>
                 </div>
+
                 <div class="about-text">
                     <h3>Hi, I'm the missing piece to your communications puzzle.</h3>
                     <p>As an Advertising and Public Relations major at the University of Central Florida, I've spent my academic career mastering the art of the strategic pivot. I don't just write press releases; I architect stories.</p>
@@ -788,11 +803,9 @@
     </footer>
 
     <script>
-        // Minimalist Mobile Menu Logic
         const menuToggle = document.getElementById('menuToggle');
         const navOverlay = document.getElementById('navOverlay');
         const navLinks = document.querySelectorAll('.nav-link');
-        const navBar = document.getElementById('nav');
 
         menuToggle.addEventListener('click', () => {
             menuToggle.classList.toggle('active');
